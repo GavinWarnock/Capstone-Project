@@ -63,7 +63,7 @@ cars_schema = CarSchema(many=True)
 
 class GroupSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
-    player =  ma.Nested(UserSchema, many=False)
+    player =  ma.Nested(UserSchema, many=True)
     bio = fields.String()
     player_id = fields.Integer()
     game = fields.String(required=True)
@@ -79,3 +79,18 @@ class GroupSchema(ma.Schema):
 
 group_schema = GroupSchema()
 groups_schema = GroupSchema(many=True)
+
+class GameSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    name = fields.String(required=True)
+    bio = fields.String()
+
+    class Meta:
+        fields = ("id", "name", "bio")
+    
+    @post_load
+    def create_game(self, data, **kwargs):
+        return Game(**data)
+    
+game_schema = GameSchema()
+games_schema = GameSchema(many=True)
