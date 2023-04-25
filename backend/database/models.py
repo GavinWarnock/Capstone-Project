@@ -10,6 +10,7 @@ class User(db.Model):
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    bio = db.Column(db.String(510), nullable=False)
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -31,3 +32,17 @@ class Car(db.Model):
     user = db.relationship("User")
 
 # TODO: Add your models below, remember to add a new migration and upgrade database
+
+class Group(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    player = db.Column(db.String(255), nullable=False, unique=True)
+    bio = db.Column(db.String(510), nullable=False)
+    player_id = db.Column(db.Integer, nullable=False)
+    game = db.Column(db.String(255), nullable=False)
+    meeting_time = db.Column(db.String(255), nullable=False)
+    metting_day = db.Column(db.Date, nullable=False)
+
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    bio = db.Column(db.String(510), nullable=False)

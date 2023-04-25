@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car
+from database.models import User, Car, Group, Game
 
 ma = Marshmallow()
 
@@ -31,8 +31,9 @@ class UserSchema(ma.Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     email = fields.String(required=True)
+    bio = fields.String(required=True)
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email",)
+        fields = ("id", "username", "first_name", "last_name", "email", "bio")
 
 register_schema = RegisterSchema()
 user_schema = UserSchema()
@@ -59,3 +60,22 @@ cars_schema = CarSchema(many=True)
 
 
 # TODO: Add your schemas below
+
+class GroupSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    player =  ma.Nested(UserSchema, many=False)
+    bio = fields.String()
+    player_id = fields.Integer()
+    game = fields.String(required=True)
+    meeting_time = fields.String(required=True)
+    meeting_day = fields.Date(required=True)
+
+    class Meta:
+        fields = ("id", "player", "bio", "player_id", "game", "meeting_time", "meeting_day")
+
+    @post_load
+    def create_group(self, data, **kwargs):
+        return Group(**data)
+
+group_schema = GroupSchema()
+groups_schema = GroupSchema(many=True)
