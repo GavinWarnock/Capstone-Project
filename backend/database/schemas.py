@@ -60,26 +60,6 @@ cars_schema = CarSchema(many=True)
 
 
 # TODO: Add your schemas below
-
-class GroupSchema(ma.Schema):
-    id = fields.Integer(primary_key=True)
-    player =  ma.Nested(UserSchema, many=True)
-    bio = fields.String()
-    player_id = fields.Integer()
-    game = fields.String(required=True)
-    meeting_time = fields.String(required=True)
-    meeting_day = fields.Date(required=True)
-
-    class Meta:
-        fields = ("id", "player", "bio", "player_id", "game", "meeting_time", "meeting_day")
-
-    @post_load
-    def create_group(self, data, **kwargs):
-        return Group(**data)
-
-group_schema = GroupSchema()
-groups_schema = GroupSchema(many=True)
-
 class GameSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
@@ -94,3 +74,23 @@ class GameSchema(ma.Schema):
     
 game_schema = GameSchema()
 games_schema = GameSchema(many=True)
+class GroupSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    name = fields.String(required=True)
+    player =  ma.Nested(UserSchema, many=True)
+    bio = fields.String()
+    player_id = fields.Integer()
+    game = ma.Nested(GameSchema)
+    meeting_time = fields.String(required=True)
+    meeting_day = fields.Date(required=True)
+
+    class Meta:
+        fields = ("id", "name", "player", "bio", "player_id", "game", "meeting_time", "meeting_day")
+
+    @post_load
+    def create_group(self, data, **kwargs):
+        return Group(**data)
+
+group_schema = GroupSchema()
+groups_schema = GroupSchema(many=True)
+

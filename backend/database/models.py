@@ -10,7 +10,7 @@ class User(db.Model):
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    bio = db.Column(db.String(510), nullable=False)
+    bio = db.Column(db.String(510))
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -35,12 +35,14 @@ class Car(db.Model):
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    player = db.Column(db.String(255), nullable=False, unique=True)
+    name = db.Column(db.String(255), nullable=False)
+    player = db.relationship("User")
     bio = db.Column(db.String(510), nullable=False)
-    player_id = db.Column(db.Integer, nullable=False)
-    game = db.Column(db.String(255), nullable=False)
+    player_id = db.Column(db.Integer, db.ForeignKey('user.username'))
+    game = db.relationship("Game")
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     meeting_time = db.Column(db.String(255), nullable=False)
-    metting_day = db.Column(db.Date, nullable=False)
+    meeting_day = db.Column(db.Date, nullable=False)
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
