@@ -10,7 +10,6 @@ class User(db.Model):
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    bio = db.Column(db.String(510))
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -38,7 +37,7 @@ class Group(db.Model):
     name = db.Column(db.String(255), nullable=False)
     player = db.relationship("User")
     bio = db.Column(db.String(510), nullable=False)
-    player_id = db.Column(db.Integer, db.ForeignKey('user.username'))
+    player_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     game = db.relationship("Game")
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     meeting_time = db.Column(db.String(255), nullable=False)
@@ -48,3 +47,11 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(510), nullable=False)
+
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    email = db.Column(db.String(50), unique=True)
+    bio = db.Column(db.String(510))
+    picture = db.Column(db.String(255))
+    

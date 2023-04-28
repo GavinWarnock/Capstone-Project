@@ -1,6 +1,6 @@
 from flask_marshmallow import Marshmallow
 from marshmallow import post_load, fields
-from database.models import User, Car, Group, Game
+from database.models import User, Car, Group, Game, Profile
 
 ma = Marshmallow()
 
@@ -94,3 +94,19 @@ class GroupSchema(ma.Schema):
 group_schema = GroupSchema()
 groups_schema = GroupSchema(many=True)
 
+class ProfileSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    name = fields.String(required=True)
+    email = fields.String(required=True)
+    bio = fields.String()
+    picture = fields.String()
+
+    class Meta:
+        fields = ("id", "name", "email", "bio", "picture")
+    
+    @post_load
+    def create_profile(self, data, **kwargs):
+        return Profile(**data)
+    
+profile_schema = ProfileSchema()
+profiles_schema = ProfileSchema(many=True)
