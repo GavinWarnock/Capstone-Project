@@ -1,9 +1,8 @@
 from flask import request
 from flask_jwt_extended import jwt_required, get_jwt_identity, verify_jwt_in_request
 from flask_restful import Resource
-from database.models import db, User, Group, Game, Profile
-from database.schemas import group_schema, groups_schema, game_schema, games_schema, profile_schema, profiles_schema
-
+from database.models import db, User, Group, Game
+from database.schemas import group_schema, groups_schema, game_schema, games_schema, user_schema
 class GroupsResource(Resource):
     @jwt_required()
     def post(self):
@@ -39,17 +38,16 @@ class GamesResource(Resource):
         games = Game.query.all()
         return games_schema.dump(games), 200
     
-class ProfileResource(Resource):
-    @jwt_required()
-    def post(self):
-        player_id = get_jwt_identity()
-        form_data = request.get_json()
-        new_profile = profile_schema.load(form_data)
-        new_profile.player_id = player_id
-        db.session.add(new_profile)
+class UserResource(Resource):
+    def put(self, user_id):
+        user_from_db = User.query.get_or_404(user_id)
+        if 'username' in request.json:
+            user_from_db.username = request.json['username']
+        if 'game_preference' in request.json:
+            user_from_db.game_preference = request.json ['game_preference']
+        if 'bio' in request.json:
+            user_from_db.bio = request.json['bio']
+        if 'picture' in request.json:
+            user_from_db.picture = request.json['picture']
         db.session.commit()
-        return profile_schema.dump(new_profile), 201
-    
-    def get(self):
-        profiles = Profile.query.all()
-        return profiles_schema.dump(profiles)
+        return user_schema.dump(user_from_db), 200

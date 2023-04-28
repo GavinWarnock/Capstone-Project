@@ -9,31 +9,31 @@ const HomePage = () => {
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
-  const [cars, setCars] = useState([]);
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    const fetchCars = async () => {
+    const fetchGroups = async () => {
       try {
-        let response = await axios.get("http://127.0.0.1:5000/api/user_cars", {
+        let response = await axios.get("http://127.0.0.1:5000/api/groups", {
           headers: {
             Authorization: "Bearer " + token,
           },
         });
-        setCars(response.data);
+        setGroups(response.data);
       } catch (error) {
         console.log(error.response.data);
       }
     };
-    fetchCars();
+    fetchGroups();
   }, [token]);
   return (
     <div className="container">
       {console.log(user)}
       <h1>Home Page for {user.username}!</h1>
-      {cars &&
-        cars.map((car) => (
-          <p key={car.id}>
-            {car.year} {car.model} {car.make}
+      {groups &&
+        groups.map((group) => (
+          <p key={group.id}>
+            {group.name} {group.bio} {group.player}
           </p>
         ))}
     </div>
