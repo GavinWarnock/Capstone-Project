@@ -32,8 +32,7 @@ const HomePage = () => {
       <h1>Home Page for {user.username}!</h1>
       {groups &&
         groups.map((group) => (
-          <p key={group.id}>
-            {group.name} {group.bio} {group.player}
+          <p key={group.name}>
           </p>
         ))}
     </div>

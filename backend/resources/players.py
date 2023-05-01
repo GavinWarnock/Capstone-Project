@@ -21,7 +21,6 @@ class GroupsResource(Resource):
         player_groups = Group.query.filter_by(player_id=player_id).all()
         print(player_groups)
         return groups_schema.dump(player_groups), 200
-        # return 200
 
     @jwt_required()
     def delete(self, group_id):
@@ -29,6 +28,18 @@ class GroupsResource(Resource):
         db.session.delete(group_from_db)
         db.session.commit()
         return "", 204
+    
+    @jwt_required()
+    def put(self, group_id):
+        group_from_db = Group.query.get_or_404(group_id)
+        if 'name' in request.json:
+            group_from_db.name = request.json['name']
+        if 'bio' in request.json:
+            group_from_db.bio = request.json['bio']
+        if 'player' in request.json:
+            group_from_db.player = request.json['player']
+        if 'game' in request.json:
+            group_from_db.game = request.json['game']
 class GamesResource(Resource):
     def post(self):
         form_data = request.get_json()
