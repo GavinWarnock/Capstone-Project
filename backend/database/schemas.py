@@ -83,7 +83,7 @@ games_schema = GameSchema(many=True)
 class GroupSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    player =  ma.Nested(UserSchema, many=True)
+    player =  ma.Nested(UserSchema)
     bio = fields.String()
     player_id = fields.Integer()
     game = ma.Nested(GameSchema)

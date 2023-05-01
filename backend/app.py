@@ -57,7 +57,7 @@ def create_routes():
     api.add_resource(AllCarResource, '/api/cars')
     api.add_resource(UserCarResource, '/api/user_cars')
     # TODO: Create files for your Resources in resources folder, add them here
-    api.add_resource(GroupsResource, '/api/groups/')
+    api.add_resource(GroupsResource, '/api/groups')
     api.add_resource(GamesResource, '/api/games')
     api.add_resource(UserResource, '/api/users/<int:user_id>')
     return api

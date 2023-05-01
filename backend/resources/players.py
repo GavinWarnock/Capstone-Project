@@ -17,8 +17,11 @@ class GroupsResource(Resource):
     @jwt_required()
     def get(self):
         player_id = get_jwt_identity()
+        print(player_id)
         player_groups = Group.query.filter_by(player_id=player_id).all()
+        print(player_groups)
         return groups_schema.dump(player_groups), 200
+        # return 200
 
     @jwt_required()
     def delete(self, group_id):
