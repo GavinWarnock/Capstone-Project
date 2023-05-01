@@ -8,7 +8,7 @@ from database.models import db
 from database.schemas import ma
 from resources.auth import LoginResource, RegisterResource
 from resources.cars import AllCarResource, UserCarResource
-from resources.players import GroupsResource, GamesResource, UserResource
+from resources.players import GroupsResource, GamesResource, UserResource, GroupsByIdResource
 from dotenv import load_dotenv
 from os import environ
 
@@ -60,4 +60,5 @@ def create_routes():
     api.add_resource(GroupsResource, '/api/groups')
     api.add_resource(GamesResource, '/api/games')
     api.add_resource(UserResource, '/api/users/<int:user_id>')
+    api.add_resource(GroupsByIdResource, '/api/groups_by_id/<int:group_id>')
     return api

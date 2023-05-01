@@ -33,21 +33,23 @@ const ProfilePage = () => {
                 <div>Loading...</div>
             ) : (
                 <div>
-                    <h1>My Groups</h1>
                     <div>
-                        <ul>
-                            {groups.map((group) => (
-                                <li key={group.player_id}>
-                                    <span>{group.name}</span>
-                                    <div></div>
-                                    <span>{group.bio}</span>
-                                    <div></div>
-                                    <span>{group.meeting_time}</span>
-                                    <div></div>
-                                    <span>{group.meeting_day}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        <h1>My Groups</h1>
+                        <div>
+                            <ul>
+                                {groups.map((group) => (
+                                    <li key={group.player_id}>
+                                        <span>{group.name}</span>
+                                        <div></div>
+                                        <span>{group.bio}</span>
+                                        <div></div>
+                                        <span>{group.meeting_time}</span>
+                                        <div></div>
+                                        <span>{group.meeting_day}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             )}
