@@ -34,17 +34,21 @@ class Car(db.Model):
     user = db.relationship("User")
 
 # TODO: Add your models below, remember to add a new migration and upgrade database
-
+user_group = db.Table('user_group',
+                      db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                      db.Column('group_id', db.Integer, db.ForeignKey('group.id'))
+                )
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    player = db.relationship("User")
+    owner = db.relationship("User")
     bio = db.Column(db.String(510), nullable=False)
-    player_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     game = db.relationship("Game")
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     meeting_time = db.Column(db.String(255), nullable=False)
     meeting_day = db.Column(db.Date, nullable=False)
+    attendees = db.relationship("User", secondary = user_group, backref = 'group')
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)

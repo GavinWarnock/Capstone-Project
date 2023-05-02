@@ -6,22 +6,26 @@ from database.schemas import group_schema, groups_schema, game_schema, games_sch
 class GroupsResource(Resource):
     @jwt_required()
     def post(self):
-        player_id = get_jwt_identity()
+        owner_id = get_jwt_identity()
         form_data = request.get_json()
         new_group = group_schema.load(form_data)
-        new_group.player_id = player_id
+        new_group.owner_id = owner_id
         db.session.add(new_group)
         db.session.commit()
         return group_schema.dump(new_group), 201
     
     @jwt_required()
     def get(self):
-        player_id = get_jwt_identity()
-        print(player_id)
-        player_groups = Group.query.filter_by(player_id=player_id).all()
+        owner_id = get_jwt_identity()
+        print(owner_id)
+        player_groups = Group.query.filter_by(owner_id=owner_id).all()
         print(player_groups)
         return groups_schema.dump(player_groups), 200
 
+class GetAllGroupsResource(Resource):
+    def get(self):
+        groups = Group.query.all()
+        return groups_schema.dump(groups), 200
 
 class GroupsByIdResource(Resource):  
     @jwt_required()
@@ -31,10 +35,10 @@ class GroupsByIdResource(Resource):
             group_from_db.name = request.json['name']
         if 'bio' in request.json:
             group_from_db.bio = request.json['bio']
-        if 'player' in request.json:
-            group_from_db.player = request.json['player']
-        if 'game' in request.json:
-            group_from_db.game = request.json['game']
+        if 'owner_id' in request.json:
+            group_from_db.owner_id = request.json['owner_id']
+        if 'game_id' in request.json:
+            group_from_db.game_id = request.json['game_id']
         db.session.commit()
         return group_schema.dump(group_from_db), 200
     
@@ -73,3 +77,17 @@ class UserResource(Resource):
     def get(self, user_id):
         user_from_db = User.query.get_or_404(user_id)
         return user_schema.dump(user_from_db)
+
+class JoinGroupResource(Resource):
+    @jwt_required()
+    def put(self, group_id):
+        joiner_id = get_jwt_identity()
+        joiner = User.query.get_or_404(joiner_id)
+        joined_group = Group.query.get_or_404(group_id)
+        if joiner in joined_group.attendees:
+            joined_group.attendees.remove(joiner)
+        else:
+            joined_group.attendees.append(joiner)
+        print(joined_group.attendees)
+        db.session.commit()
+        return group_schema.dump(joined_group), 200

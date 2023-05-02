@@ -83,15 +83,15 @@ games_schema = GameSchema(many=True)
 class GroupSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    player =  ma.Nested(UserSchema)
+    owner =  ma.Nested(UserSchema)
     bio = fields.String()
-    player_id = fields.Integer()
+    owner_id = fields.Integer()
     game = ma.Nested(GameSchema)
     meeting_time = fields.String(required=True)
     meeting_day = fields.Date(required=True)
-
+    attendees = ma.Nested(UserSchema, many=True)
     class Meta:
-        fields = ("id", "name", "player", "bio", "player_id", "game", "meeting_time", "meeting_day")
+        fields = ("id", "name", "owner", "bio", "owner_id", "game", "meeting_time", "meeting_day", "attendees")
 
     @post_load
     def create_group(self, data, **kwargs):
