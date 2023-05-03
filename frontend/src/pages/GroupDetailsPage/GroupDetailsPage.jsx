@@ -27,6 +27,7 @@ const GroupDetailPage =  () => {
             if (isJoined) {
                 await axios.put(
                     `http://127.0.0.1:5000/api/join_groups/${groupId}`,
+                    {},
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -37,6 +38,7 @@ const GroupDetailPage =  () => {
             } else {
                 await axios.put(
                     `http://127.0.0.1:5000/api/join_groups/${groupId}`,
+                    {},
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -54,7 +56,7 @@ const GroupDetailPage =  () => {
         const checkJoin = async () => {
             try {
                 let response = await axios.get(
-                    `http://127.0.0.1:5000//api/groups_by_id/${groupId}`,
+                    `http://127.0.0.1:5000/api/groups_by_id/${groupId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -87,7 +89,17 @@ const GroupDetailPage =  () => {
                                     <li>{attendee.username}</li>
                                     )}
                                 </ul>
-                                
+                                <div>
+                                    <h4>Group Game: {groupDetails.game.name}</h4>
+                                    <div>
+                                        <h4>Group Owner: {groupDetails.owner.username}</h4>
+                                        <div>
+                                            <button onClick={joinGroup} style={{ textAlign: "center", display: "block", margin: "auto"}}>
+                                                {isJoined ? "Leave Group" : "Join Group"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
