@@ -63,17 +63,17 @@ const ProfilePage = () => {
                                 <ul>
                                     {groups.map((group) => (
                                         <li key={group.owner_id}>
-                                            <span>{group.name}</span>
+                                            <span>Group Name: {group.name}</span>
                                             <div></div>
-                                            <span>{group.bio}</span>
+                                            <span>Group Bio: {group.bio}</span>
                                             <div></div>
-                                            <span>{group.meeting_time}</span>
+                                            <span>Meeting Time: {group.meeting_time}</span>
                                             <div></div>
-                                            <span>{group.meeting_day}</span>
+                                            <span>Meeting Date: {group.meeting_day}</span>
                                             <div></div>
-                                            <span>{group.game.name}</span>
+                                            <span>Game: {group.game.name}</span>
                                             <div></div>
-                                            <span>{group.attendees}</span>
+                                            <span>Who is playing: {group.attendees}</span>
                                         </li>
                                     ))}
                                 </ul>

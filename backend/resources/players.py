@@ -48,6 +48,10 @@ class GroupsByIdResource(Resource):
         db.session.delete(group_from_db)
         db.session.commit()
         return "", 204
+    
+    def get(self, group_id):
+        group_from_db = Group.query.get_or_404(group_id)
+        return group_schema.dump(group_from_db)
 class GamesResource(Resource):
     def post(self):
         form_data = request.get_json()
