@@ -50,6 +50,7 @@ class GroupsByIdResource(Resource):
         return "", 204
     
     def get(self, group_id):
+        print(group_id)
         group_from_db = Group.query.get_or_404(group_id)
         return group_schema.dump(group_from_db)
 class GamesResource(Resource):
@@ -95,3 +96,8 @@ class JoinGroupResource(Resource):
         print(joined_group.attendees)
         db.session.commit()
         return group_schema.dump(joined_group), 200
+
+class GroupsByNameResource(Resource):
+    def get(self, name):
+        group_from_db = Group.query.filter_by(name).all()
+        return group_schema.dump(group_from_db) 

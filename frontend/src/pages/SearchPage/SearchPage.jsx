@@ -10,7 +10,7 @@ const SearchPage = () => {
     try {
       let lowerCaseSearchTerm = searchTerm.toLowerCase();
       let response = await axios.get(
-        `http://127.0.0.1:5000/api/all_groups`
+        `http://127.0.0.1:5000/api/groups_by_name?q=${lowerCaseSearchTerm}`
       );
       setSearchResults(response.data);
     } catch (error) {
@@ -20,7 +20,7 @@ const SearchPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`You searched for ${searchTerm}`);
+    console.log(`You searched for ${searchTerm}`);
     fetchGroups();
   };
 

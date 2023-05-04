@@ -73,7 +73,7 @@ const ProfilePage = () => {
                                             <div></div>
                                             <span>Game: {group.game.name}</span>
                                             <div></div>
-                                            <span>Who is playing: {group.attendees}</span>
+                                            
                                         </li>
                                     ))}
                                 </ul>
