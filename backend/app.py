@@ -63,5 +63,5 @@ def create_routes():
     api.add_resource(GroupsByIdResource, '/api/groups_by_id/<int:group_id>')
     api.add_resource(JoinGroupResource, '/api/join_groups/<int:group_id>')
     api.add_resource(GetAllGroupsResource, '/api/all_groups')
-    api.add_resource(GroupsByNameResource, '/api/groups_by_name/<string:name>')
+    api.add_resource(GroupsByNameResource, '/api/groups_by_name/<string:group_name>')
     return api

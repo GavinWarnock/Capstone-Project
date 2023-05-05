@@ -98,6 +98,6 @@ class JoinGroupResource(Resource):
         return group_schema.dump(joined_group), 200
 
 class GroupsByNameResource(Resource):
-    def get(self, name):
-        group_from_db = Group.query.filter_by(name).all()
-        return group_schema.dump(group_from_db) 
+    def get(self, group_name):
+        group_from_db = Group.query.filter(Group.name.contains(group_name)).all()
+        return groups_schema.dump(group_from_db) 

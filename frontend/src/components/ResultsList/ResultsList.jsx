@@ -10,6 +10,7 @@ const ResultsList = ({ searchResults }) => {
             <div>
               <h3>{group?.name}</h3>
               <h3>Group Bio: {group.bio} </h3>
+              <h3>Group Game: {group.game.name} </h3>
             </div>
           </Link>
         </div>
