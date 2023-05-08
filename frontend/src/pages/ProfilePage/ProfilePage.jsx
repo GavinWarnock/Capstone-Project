@@ -50,6 +50,29 @@ const ProfilePage = () => {
         fetchGroups();
     }, []);
 
+    const handleDelete = async (groupId) => {
+        try {
+            let response = await axios.delete(
+                `http://127.0.0.1:5000/api/groups_by_id/${groupId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            setGroups(groups.filter(group => group.id !== groupId));
+        } catch (error) {
+            console.log("Error in handleDelete:", error)
+        }
+    }
+
+    const deleteGroup = () => {
+        const groupId = prompt("Please enter the Id of the group you want to delete.")
+        handleDelete(groupId)
+    }
+    
+    
+
     return(
         <div>
             {isLoading ? (
@@ -90,6 +113,7 @@ const ProfilePage = () => {
                                     ))}
                                 </ul>
                             </div>
+                            <button onClick={deleteGroup}>Delete a group.</button>
                         </div>
                     </div>
                 </div>
@@ -97,5 +121,4 @@ const ProfilePage = () => {
         </div>
     )
 }
-
 export default ProfilePage
