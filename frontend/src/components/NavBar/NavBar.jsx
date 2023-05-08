@@ -21,6 +21,11 @@ const Navbar = () => {
           </Link>
         </li>
         <div>
+          <Link to="/my_groups">
+            <h3>My Groups</h3>
+            </Link>
+        </div>
+        <div>
           <Link to="/search">
             <h3>Search</h3>
           </Link>

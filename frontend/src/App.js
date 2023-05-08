@@ -15,6 +15,7 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import MyGroupsPage from "./pages/MyGroupsPage/MyGroupsPage";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="my_groups" element={<MyGroupsPage />} />
         <Route path="/details/:groupId" element={<GroupDetailPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/profile" element={<ProfilePage />} /> 

@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
+import EditProfile from '../../components/EditProfile/EditProfile';
+import Modal from '../../components/Modal/modal2';
 
 
 
 const ProfilePage = () => {
     const { user, token } = useContext(AuthContext);
+    const auth = "Bearer" + token;
     const [groups, setGroups] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userData, setUserData] = useState(null)
@@ -58,12 +61,21 @@ const ProfilePage = () => {
                         <div>
                             <h3>About Me</h3>
                             <p>{userData.bio}</p>
-                            <h3>{userData.username}'s Groups</h3>
+                            <p>Game Preference: {userData.game_preference}</p>
+                            <div></div>
+                            <div>
+                                <Modal>
+                                    <EditProfile userId={user.id} auth={auth} />
+                                </Modal>
+                            </div> 
+                            <h3>{userData.username}'s Hosted Groups</h3>
+
                             <div>
                                 <ul>
                                     {groups.map((group) => (
                                         <li key={group.owner_id}>
                                             <span>Group Name: {group.name}</span>
+                                            <div>Group Id: {group.id}</div>
                                             <div></div>
                                             <span>Group Bio: {group.bio}</span>
                                             <div></div>
@@ -73,7 +85,7 @@ const ProfilePage = () => {
                                             <div></div>
                                             <span>Game: {group.game.name}</span>
                                             <div></div>
-                                            
+                                            <span>Group Members: {group.attendees.name}</span>
                                         </li>
                                     ))}
                                 </ul>

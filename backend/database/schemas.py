@@ -35,7 +35,7 @@ class UserSchema(ma.Schema):
     bio = fields.String()
     picture = fields.String()
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email", "bio", "picture")
+        fields = ("id", "username", "first_name", "last_name", "email", "bio", "picture", "game_preference")
 
     @post_load
     def create_profile(self, data, **kwargs):
@@ -87,11 +87,12 @@ class GroupSchema(ma.Schema):
     bio = fields.String()
     owner_id = fields.Integer()
     game = ma.Nested(GameSchema)
+    game_id = fields.Integer()
     meeting_time = fields.String(required=True)
     meeting_day = fields.Date(required=True)
     attendees = ma.Nested(UserSchema, many=True)
     class Meta:
-        fields = ("id", "name", "owner", "bio", "owner_id", "game", "meeting_time", "meeting_day", "attendees")
+        fields = ("id", "name", "owner", "bio", "owner_id", "game","game_id", "meeting_time", "meeting_day", "attendees")
 
     @post_load
     def create_group(self, data, **kwargs):

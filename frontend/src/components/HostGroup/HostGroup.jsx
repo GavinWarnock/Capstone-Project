@@ -4,27 +4,37 @@ import useAuth from '../../hooks/useAuth';
 
 
 const HostGroup = () => {
-    const [ token ] = useAuth();
-    const [newGroup, setNewGroup] = useState([]);
+    const [user, token ] = useAuth();
+    const [newGroup, setNewGroup] = useState({
+        name: "",
+        bio: "",
+        meeting_time: "",
+        meeting_date: "",
+        game: ""
+
+    });
     const [newGroupName, setNewGroupName] = useState("")
     const [newGroupBio, setNewGroupBio] = useState("")
     const [newGroupMeetingTime, setNewGroupMeetingTime] = useState("")
     const [newGroupMeetingDate, setNewGroupMeetingDate] = useState("")
-    const [newGroupGame, setNewGroupGame] = useState()
+    const [newGroupGame, setNewGroupGame] = useState("")
 
     const [isLoading, setIsLoading] = useState(false);
     
-    const hostNewGroup = async () => {
-        try{
+    const hostNewGroup = async (event) => {
+        event.preventDefault();
+        try{ 
+            let postedObject = {    
+                name: newGroupName,
+                bio: newGroupBio,
+                meeting_time: newGroupMeetingTime,
+                meeting_day: newGroupMeetingDate,
+                game_id: parseInt(newGroupGame)
+            }
+            console.log("Example",postedObject)
             let response = await axios.post(
                 "http://127.0.0.1:5000/api/groups",
-                {
-                    name: newGroupName,
-                    bio: newGroupBio,
-                    meeting_time: newGroupMeetingTime,
-                    meeting_date: newGroupMeetingDate,
-                    game_id: newGroupGame
-                },
+                postedObject,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -44,11 +54,11 @@ const HostGroup = () => {
             ) : (
                 <div>
                     <form>
-                        <input type='text' name="name" placeholder='Group Name' value={newGroup.name} />
-                        <input type='text' name="bio" placeholder='Bio' value={newGroup.bio} />
-                        <input type='text' name="meeting_time" placeholder='Meeting Time HH:MM' value={newGroup.meeting_time}/>
-                        <input type='text' name="meeting_date" placeholder='Meeting Date YYYY-MM-DD' value={newGroup.meeting_date}/>
-                        <input type='text' name="game_id" placeholder='Game Id' value={newGroup.game_id}/>
+                        <input type='text' name="name" placeholder='Group Name' value={newGroupName} onChange={(e)=> setNewGroupName(e.target.value)} />
+                        <input type='text' name="bio" placeholder='Bio' value={newGroupBio} onChange={(e)=> setNewGroupBio(e.target.value)}/>
+                        <input type='text' name="meeting_time" placeholder='Meeting Time HH:MM' value={newGroupMeetingTime} onChange={(e)=> setNewGroupMeetingTime(e.target.value)}/>
+                        <input type='text' name="meeting_date" placeholder='Meeting Date YYYY-MM-DD' value={newGroupMeetingDate} onChange={(e)=> setNewGroupMeetingDate(e.target.value)}/>
+                        <input type='text' name="game_id" placeholder='Game Id' value={newGroupGame} onChange={(e)=> setNewGroupGame(e.target.value)}/>
                         <button type='submit' onClick={hostNewGroup}>Create Group!</button>
                     </form>
                 </div>
