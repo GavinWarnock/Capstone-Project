@@ -3,12 +3,13 @@ import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import Modal from '../../components/Modal/modal2';
-
+import EditGroup from '../../components/EditGroup/EditGroup';
+import Modal3 from '../../components/Modal3/Modal3';
 
 
 const ProfilePage = () => {
     const { user, token } = useContext(AuthContext);
-    const auth = "Bearer" + token;
+    const auth = "Bearer " + token;
     const [groups, setGroups] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [userData, setUserData] = useState(null)
@@ -71,6 +72,7 @@ const ProfilePage = () => {
         handleDelete(groupId)
     }
     
+
     
 
     return(
@@ -108,9 +110,17 @@ const ProfilePage = () => {
                                             <div></div>
                                             <span>Game: {group.game.name}</span>
                                             <div></div>
-                                            <span>Group Members: {group.attendees.name}</span>
+                                            {groups.length > 0 && groups.map((group) => (
+                                                <div key={group.id}>
+                                                    <span>Group Members: {group.attendees.map((attendee) => attendee.username).join(" ")}</span>
+                                                </div>
+
+                                            ))}
                                         </li>
                                     ))}
+                                    <Modal3>
+                                        <EditGroup />
+                                    </Modal3>
                                 </ul>
                             </div>
                             <button onClick={deleteGroup}>Delete a group.</button>
