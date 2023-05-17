@@ -17,7 +17,7 @@ const MyGroups = () => {
             }
         fetchGroups();
         }
-    })
+    }, []);
 
     return (
         <div>
@@ -25,8 +25,8 @@ const MyGroups = () => {
             <div>
                 <ul>
                     {groups.map((attendee) => (
-                        <li key={groups.id}>
-                            <h2>{groups.name}</h2>
+                        <li key={attendee.id}>
+                            <h2>{attendee.username}</h2>
                             <p>{groups.bio}</p>
                             <p>Attendees: {attendee.username}</p>
                         </li>

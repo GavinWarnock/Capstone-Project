@@ -39,6 +39,10 @@ class GroupsByIdResource(Resource):
             group_from_db.owner_id = request.json['owner_id']
         if 'game_id' in request.json:
             group_from_db.game_id = request.json['game_id']
+        if 'meeting_time' in request.json:
+            group_from_db.meeting_time = request.json['meeting_time']
+        if 'meeting_day' in request.json:
+            group_from_db.meeting_day = request.json['meeting_day']
         db.session.commit()
         return group_schema.dump(group_from_db), 200
     
@@ -101,3 +105,17 @@ class GroupsByNameResource(Resource):
     def get(self, group_name):
         group_from_db = Group.query.filter(Group.name.contains(group_name)).all()
         return groups_schema.dump(group_from_db) 
+    
+class DeleteAttendeeByIdResource(Resource):
+    def delete(self, user_id, group_id):
+        group = Group.query.get(group_id)
+        if not group:
+            return {'error': 'Group not found'} , 404
+        user = User.query.get(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+        if user not in group.users:
+            return {'error': 'User is not a member of the group'}, 400
+        group.attendees.remove(user)
+        db.session.commit()
+        return {'message': 'User removed from the group'}

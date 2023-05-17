@@ -1,13 +1,10 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
 import axios from "axios";
 
 const HomePage = () => {
-  // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
-  // The "token" value is the JWT token that you will send in the header of any request requiring authentication
-  //TODO: Add an AddCars Page to add a car for a logged in user's garage
   const [user, token] = useAuth();
   const [groups, setGroups] = useState([]);
 
@@ -26,16 +23,15 @@ const HomePage = () => {
     };
     fetchGroups();
   }, [token]);
+
   return (
-    <div className="container">
-      {console.log(user)}
-      <h1>Home Page for {user.username}!</h1>
-      {groups &&
-        groups.map((group) => (
-          <p key={group.name}>
-          </p>
-        ))}
-    </div>
+    <>
+      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+      <div className="container">
+        {console.log(user)}
+        <h1>Home Page for {user.username}!</h1>
+      </div>
+    </>
   );
 };
 

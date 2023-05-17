@@ -30,6 +30,11 @@ const Navbar = () => {
             <h3>Search</h3>
           </Link>
         </div>
+        <div>
+          <Link to="/">
+            <h3>Home</h3>
+          </Link>
+        </div>
         <li>
           {user ? (
             <button onClick={logoutUser}>Logout</button>
