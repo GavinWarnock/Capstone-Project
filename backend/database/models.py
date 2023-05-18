@@ -13,6 +13,9 @@ class User(db.Model):
     game_preference = db.Column(db.String(510))
     bio = db.Column(db.String(510))
     picture = db.Column(db.String(510))
+    # group = db.relationship("Group", secondary = "user_group", backref = 'user')
+    
+
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf8')
@@ -48,10 +51,10 @@ class Group(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'))
     meeting_time = db.Column(db.String(255), nullable=False)
     meeting_day = db.Column(db.Date, nullable=False)
-    attendees = db.relationship("User", secondary = user_group, backref = 'group')
+    attendees = db.relationship("User", secondary = user_group, backref = 'groups')
 
 class Game(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) 
     name = db.Column(db.String(255), nullable=False)
     bio = db.Column(db.String(510), nullable=False)
 

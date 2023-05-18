@@ -34,8 +34,10 @@ class UserSchema(ma.Schema):
     game_preference = fields.String()
     bio = fields.String()
     picture = fields.String()
+    groups = ma.Nested('GroupSchema', many=True)
+    group_id = fields.Integer()
     class Meta:
-        fields = ("id", "username", "first_name", "last_name", "email", "bio", "picture", "game_preference")
+        fields = ("id", "username", "first_name", "last_name", "email", "bio", "picture", "game_preference", "groups")
 
     @post_load
     def create_profile(self, data, **kwargs):
