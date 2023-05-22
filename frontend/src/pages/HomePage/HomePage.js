@@ -6,31 +6,40 @@ import axios from "axios";
 
 const HomePage = () => {
   const [user, token] = useAuth();
-  const [groups, setGroups] = useState([]);
+  const [events, setEvents] = useState([]);
+
+  const fetchUserEvents = async () => {
+    try {
+      let response = await axios.get(
+        `http://127.0.0.1:5000/api/users/${user.id}`
+      )
+      console.log(response.data.groups)
+      setEvents(response.data.groups)
+    } catch (error) {
+      console.log("Error in fetchUserEvents", error)
+    }
+  }
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      try {
-        let response = await axios.get("http://127.0.0.1:5000/api/groups", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        setGroups(response.data);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    };
-    fetchGroups();
-  }, [token]);
+    fetchUserEvents();
+}, []);
+
+  const mappedEvents = events.map(group => ({
+      title: group.name,
+      date: group.meeting_day
+  }));
+
 
   return (
     <>
-      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
       <div className="container">
-        {console.log(user)}
-        <h1>Home Page for {user.username}!</h1>
+      <h1>Home Page for {user.username}!</h1>
       </div>
+      <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" events={mappedEvents} />
+      
+        {console.log(user)}
+        
+      
     </>
   );
 };

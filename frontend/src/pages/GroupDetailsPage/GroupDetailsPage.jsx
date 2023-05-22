@@ -94,9 +94,15 @@ const GroupDetailPage =  () => {
                                     <div>
                                         <h4>Group Owner: {groupDetails.owner.username}</h4>
                                         <div>
+                                            <div>
+                                                <h4>Meeting Time: {groupDetails.meeting_time}</h4>
+                                                    <div>
+                                                        <h4>Metting Date: {groupDetails.meeting_day}</h4>
                                             <button onClick={joinGroup} style={{ textAlign: "center", display: "block", margin: "auto"}}>
-                                                {isJoined ? "Leave Group" : "Join Group"}
+                                                {isJoined ? "Join Group" : "Leave Group"}
                                             </button>
+                                                    </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

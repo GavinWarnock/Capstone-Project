@@ -1,41 +1,64 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import AuthContext from '../../context/AuthContext';
 
 const MyGroups = () => {
-    const [groups, setGroups] = useState([]);
+  const { user, token } = useContext(AuthContext);
+  const [userData, setUserData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchGroups = async () => {
-            try {
-                let response = await axios.get(
-                    "http://127.0.0.1:5000/api/groups",
-                )
-                setGroups(response.data);
-            } catch (error) {
-                console.log("Error in fetchGroups", error)
-            }
-        fetchGroups();
-        }
-    }, []);
+  const fetchGroupData = async () => {
+    try {
+      let response = await axios.get(`http://127.0.0.1:5000/api/users/${user.id}`);
+      
+      
+      setUserData(response.data);
+      setIsLoading(false) 
+    
+    } catch (error) {
+      console.log("Error in fetchGroupData", error);
+    }
+  };
 
-    return (
-        <div>
-            <h1>My Groups</h1>
+  useEffect(() => {
+    fetchGroupData();
+  }, []);
+
+  return (
+    <div>
+        {isLoading ? (
+         <div>
+            Loading...
+        </div>
+        ) : (
             <div>
-                <ul>
-                    {groups.map((attendee) => (
-                        <li key={attendee.id}>
-                            <h2>{attendee.username}</h2>
-                            <p>{groups.bio}</p>
-                            <p>Attendees: {attendee.username}</p>
-                        </li>
-                    ))}
-                </ul>
+            {console.log(userData)}
+            <h3>My Groups:</h3>
+         <div>
+        {userData.groups.map((group) => (
+        <div key={group.id}>
+            {group.name}
+            <div>
+                {group.bio}
+            </div>
+            <div>
+                {group.game.name}
+            </div>
+            <div>
+                {group.meeting_time}
+            </div>
+            <div>
+                {group.meeting_day}
             </div>
         </div>
-         
-     );
-}
- 
+        ))}
+      </div>
+    </div>    
+        )}
+    </div>   
+  );
+};
+
 export default MyGroups;
+
+ 

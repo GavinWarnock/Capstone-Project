@@ -47,6 +47,33 @@ register_schema = RegisterSchema()
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
+class GroupMemberSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    username = fields.String(required=True)
+    first_name = fields.String(required=True)
+    last_name = fields.String(required=True)
+    email = fields.String(required=True)
+    game_preference = fields.String()
+
+    class Meta:
+        fields = ("id", "username", "first_name", "last_name", "email", "game_preference")
+group_member_schema = GroupMemberSchema()
+group_members_schema = GroupMemberSchema(many=True)
+
+class OwnerSchema(ma.Schema):
+    id = fields.Integer(primary_key=True)
+    username = fields.String(required=True)
+    first_name = fields.String(required=True)
+    last_name = fields.String(required=True)
+    email = fields.String(required=True)
+    game_preference = fields.String()
+    bio = fields.String()
+    picture = fields.String()
+
+    class Meta:
+        fields = ("id", "username", "first_name", "last_name", "email", "bio", "picture")
+owner_schema = OwnerSchema()
+owners_schema = OwnerSchema(many=True)
 
 # Car Schemas
 class CarSchema(ma.Schema):
@@ -85,14 +112,14 @@ games_schema = GameSchema(many=True)
 class GroupSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    owner =  ma.Nested(UserSchema)
+    owner =  ma.Nested(OwnerSchema)
     bio = fields.String()
     owner_id = fields.Integer()
     game = ma.Nested(GameSchema)
     game_id = fields.Integer()
     meeting_time = fields.String(required=True)
     meeting_day = fields.Date(required=True)
-    attendees = ma.Nested(UserSchema, many=True)
+    attendees = ma.Nested(GroupMemberSchema, many=True)
     class Meta:
         fields = ("id", "name", "owner", "bio", "owner_id", "game","game_id", "meeting_time", "meeting_day", "attendees")
 
@@ -102,3 +129,4 @@ class GroupSchema(ma.Schema):
 
 group_schema = GroupSchema()
 groups_schema = GroupSchema(many=True)
+
