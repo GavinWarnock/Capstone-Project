@@ -84,7 +84,7 @@ const GroupDetailPage =  () => {
                             <h3>Group Bio: {groupDetails.bio}</h3>
                             <div>
                                 <h4>Attendees: </h4>
-                                <ul>
+                                <ul className="container2">
                                     {groupDetails.attendees.map((attendee) =>
                                     <li>{attendee.username}</li>
                                     )}

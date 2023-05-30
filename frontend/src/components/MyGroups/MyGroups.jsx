@@ -36,7 +36,7 @@ const MyGroups = () => {
             <h3>My Groups:</h3>
          <div>
         {userData.groups.map((group) => (
-        <div key={group.id}>
+        <div className='container2' key={group.id}>
             {group.name}
             <div>
                 {group.bio}

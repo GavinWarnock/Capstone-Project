@@ -40,7 +40,7 @@ const EditGroup = () => {
 
     return (
         <div>
-            <form onSubmit={updateGroupInfo}>
+            <form className='form input' onSubmit={updateGroupInfo}>
                 <input type='text' name='bio' placeholder='Bio' value={editedGroupInfo.bio} onChange={handleGroupInfoChange} />
                 <input type='text' name='meeting_time' placeholder='Meeting Time HH:MM' value={editedGroupInfo.meeting_time} onChange={handleGroupInfoChange} />
                 <input type='date' name='meeting_day' placeholder='Metting Day YYYY-MM-DD' value={editedGroupInfo.meeting_day} onChange={handleGroupInfoChange} />

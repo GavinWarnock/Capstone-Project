@@ -56,3 +56,11 @@ button:hover {
   padding: 3px 7px;
   font-size: 17px;
 }
+
+.container2 {
+  border: 2px solid steelblue;
+  background-color: transparent;
+  padding: 10px;
+  align-items: center;
+
+}

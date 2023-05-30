@@ -34,7 +34,7 @@ const EditProfile = () => {
 
     return ( 
         <div>
-            <form onSubmit={updateProfile}>
+            <form className='form' onSubmit={updateProfile}>
                 <input type='text' name='username' placeholder='Username' value={editedProfileInfo.username} onChange={handleInfoChange} />
                 <input type='text' name='bio' placeholder='Bio' value={editedProfileInfo.bio} onChange={handleInfoChange} />
                 <input type='text' name='picture' placeholder='Picture' value={editedProfileInfo.picture} onChange={handleInfoChange} />

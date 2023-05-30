@@ -51,7 +51,7 @@ const ProfilePage = () => {
         fetchGroups();
     }, []);
 
-    const handleDelete = async (groupId) => {
+    const handleDeleteGroup = async (groupId) => {
         try {
             let response = await axios.delete(
                 `http://127.0.0.1:5000/api/groups_by_id/${groupId}`,
@@ -69,10 +69,30 @@ const ProfilePage = () => {
 
     const deleteGroup = () => {
         const groupId = prompt("Please enter the Id of the group you want to delete.")
-        handleDelete(groupId)
+        handleDeleteGroup(groupId)
     }
     
+    const handleDeletePlayerFromGroup = async (userId, groupId) => {
+        try {
+            let response = await axios.delete(
+                `http://127.0.0.1:5000/api/admin/${userId}/${groupId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            
+        } catch (error) {
+            console.log("Error in handleDeletePlayerFromGroup:", error)
+        }
+    }
 
+    const deletePlayerFromGroup = () => {
+        const userId = prompt("Please enter the Id of the player you want to remove")
+        const groupId = prompt("Please enter the Id of the group you want to remove this player from")
+        handleDeletePlayerFromGroup(userId, groupId)
+    }
     
 
     return(
@@ -86,7 +106,8 @@ const ProfilePage = () => {
                         <div>
                             <h3>About Me</h3>
                             <p>{userData.bio}</p>
-                            <p>Game Preference: {userData.game_preference}</p>
+                            <h3>Game Preference</h3>
+                            <p>{userData.game_preference}</p>
                             <div></div>
                             <div>
                                 <Modal>
@@ -96,9 +117,9 @@ const ProfilePage = () => {
                             <h3>{userData.username}'s Hosted Groups</h3>
 
                             <div>
-                                <ul>
+                                <ul className=''>
                                     {groups.map((group) => (
-                                        <li key={group.owner_id}>
+                                        <li className='container2' key={group.owner_id}>
                                             <span>Group Name: {group.name}</span>
                                             <div>Group Id: {group.id}</div>
                                             <div></div>
@@ -110,18 +131,19 @@ const ProfilePage = () => {
                                             <div></div>
                                             <span>Game: {group.game.name}</span>
                                             <div></div>
-                                            {groups.length > 0 && groups.map((group) => (
                                                 <div key={group.id}>
                                                     <span>Group Members: {group.attendees.map((attendee) => attendee.username).join(" ")}</span>
                                                 </div>
 
-                                            ))}
                                         </li>
                                     ))}
                                     <Modal3>
                                         <EditGroup />
                                     </Modal3>
                                 </ul>
+                                <div className='container'>
+                                    <button onClick={deletePlayerFromGroup}>Remove player from group. </button>
+                                </div>
                             </div>
                             <button onClick={deleteGroup}>Delete a group.</button>
                         </div>

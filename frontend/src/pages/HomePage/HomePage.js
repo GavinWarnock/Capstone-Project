@@ -25,8 +25,9 @@ const HomePage = () => {
 }, []);
 
   const mappedEvents = events.map(group => ({
-      title: group.name,
-      date: group.meeting_day
+      title: group.name + " - " + group.meeting_time,
+      date: group.meeting_day,
+      
   }));
 
 

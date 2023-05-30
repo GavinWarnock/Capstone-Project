@@ -53,7 +53,7 @@ const HostGroup = () => {
                 <div>Loading...</div>
             ) : (
                 <div>
-                    <form>
+                    <form className='form input'>
                         <input type='text' name="name" placeholder='Group Name' value={newGroupName} onChange={(e)=> setNewGroupName(e.target.value)} />
                         <input type='text' name="bio" placeholder='Bio' value={newGroupBio} onChange={(e)=> setNewGroupBio(e.target.value)}/>
                         <input type='text' name="meeting_time" placeholder='Meeting Time HH:MM' value={newGroupMeetingTime} onChange={(e)=> setNewGroupMeetingTime(e.target.value)}/>

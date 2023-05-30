@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const ResultsList = ({ searchResults }) => {
   return (
-    <div>
+    <div className="container2">
       {searchResults.map((group) => (
         <div key={group.id}>
           <Link to={`/details/${group.id}`}>

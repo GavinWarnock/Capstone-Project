@@ -114,7 +114,7 @@ class DeleteAttendeeByIdResource(Resource):
         user = User.query.get(user_id)
         if not user:
             return {'error': 'User not found'}, 404
-        if user not in group.users:
+        if user not in group.attendees:
             return {'error': 'User is not a member of the group'}, 400
         group.attendees.remove(user)
         db.session.commit()
