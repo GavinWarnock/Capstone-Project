@@ -134,7 +134,6 @@ const ProfilePage = () => {
                                                 <div key={group.id}>
                                                     <span>Group Members: {group.attendees.map((attendee) => attendee.username).join(" ")}</span>
                                                 </div>
-
                                         </li>
                                     ))}
                                     <Modal3>
